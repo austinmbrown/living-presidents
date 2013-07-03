@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <title>Living Presidents</title>
+  <link rel="stylesheet" type="text/css" href="css/main.css" />
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+  <script src="date.js"></script>
+
+</head>
+
+<body>
+
+  <div class="title"></div>
+
+  <div id="presidents">
+    
+  </div>
+
+  <div id="instructions">
+    <p>Choose a date to see which inaugurated US Presidents were alive on a given day.</p>
+  </div>
+
+  <div id="controls">
+    <div id="selector"></div>
+    <p class="selection">0</p>
+  </div>
+
+</body>
+</html>
+
+<script type="text/javascript">
+  
+  var presCache;
+  var today = Date.today();
+
+  // put presidents on the page, hidden
+  $.getJSON("prezfb.json", function(presidentObjects){
+    orderedPresidentList = $(presidentObjects).sort(sortByInauguration);
+    presCache = orderedPresidentList;
+    $.each(orderedPresidentList, function (index, president) {
+      $('#presidents').append('<div class="pres" id="' + president.birth + '"><img src="' + president.imageURL + '" alt="' + president.name + '" />' + '<p>' + president.name + '</p></div>');
+      
+    });
+    $('.pres').hide();
+    showPresidents();
+  });
+
+  // most of the magic happens here
+  function showPresidents() {
+
+    // get the numerical value from the slider
+    var selection = $( '#selector' ).slider( 'value' );
+    
+    // turn slider's numerical value into a date
+    chosenDate = generateDate(selection);
+    
+    // show those dates on the page
+    displayDates(chosenDate);
+    
+    selectedPresidentList = presCache.filter(function(index, president) {
+      return Date.parse(president.took_office) <= chosenDate && (Date.parse(president.death) > chosenDate || Date.parse(president.death) == null); 
+    });
+
+    removedPresidentList = presCache.filter(function(index, president) {
+      return (Date.parse(president.death) < chosenDate && Date.parse(president.death) !== null) || Date.parse(president.took_office) > chosenDate; 
+    });
+
+    $.each(removedPresidentList, function (index, president) {
+      $('#presidents').find('#' + president.birth).fadeTo(400, 0).animate({
+        width: 0
+      }, 200);
+    });
+
+    $.each(selectedPresidentList, function (index, president) {
+      $('#presidents').find('#' + president.birth).animate({
+        width: 120
+      }, 200).fadeTo(400, 1);
+    });
+  };
+
+  // slider
+  $(function() {  
+    $( "#selector" ).slider({
+      max: 0,
+      min: -82000,
+      value: 0,
+      animate: "slow",
+      slide: showPresidents,
+      change: showPresidents,
+      create: showPresidents
+    });
+    $( "#selector" ).slider( "value", 0 );
+  });
+
+  // some helper stuff
+
+  // takes a number from the slider, counts back that many days, returns date
+  function generateDate(number) {
+    var d = Date.today().addDays(number);
+    if (d.compareTo(Date.today().set({ year: 1789, month: 3, day: 30})) === -1) {
+      d = Date.today().set({ year: 1789, month: 3, day: 30});
+    };
+    return d;
+  };
+
+  // changes html to show the date based on slider position
+  function displayDates(date) {
+    var todayString = date.toString('MMMM d, yyyy');
+    $('.title').html('<h1>Living Presidents: ' + todayString + '</h1>');
+    $(".selection").html(todayString);
+  };
+
+  // what it says on the tin
+  function sortByInauguration(a,b) {
+    return a.took_office > b.took_office ? 1 : -1;
+  };
+
+
+</script>
