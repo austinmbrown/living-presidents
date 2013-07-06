@@ -45,12 +45,12 @@
       $('#presidents').append('<div class="pres" id="' + president.birth + '"><img src="' + president.imageURL + '" alt="' + president.name + '" />' + '<p>' + president.name + '</p></div>');
       
     });
-    $('.pres').hide();
-    showPresidents();
+    // $('.pres').hide();
+    showPresidentsFast();
   });
 
   // most of the magic happens here
-  function showPresidents() {
+  function showPresidentsFast() {
 
     // get the numerical value from the slider
     var selection = $( '#selector' ).slider( 'value' );
@@ -70,15 +70,53 @@
     });
 
     $.each(removedPresidentList, function (index, president) {
-      $('#presidents').find('#' + president.birth).fadeTo(400, 0).animate({
+      $('#presidents').find('#' + president.birth).css({
+        opacity: 0,
         width: 0
-      }, 200);
+      });
+    });
+
+    $.each(selectedPresidentList, function (index, president) {
+      $('#presidents').find('#' + president.birth).css({
+        width: 120,
+        opacity: 1
+      });
+    });
+  };
+
+  function showPresidentsSlow() {
+
+    // get the numerical value from the slider
+    var selection = $( '#selector' ).slider( 'value' );
+    
+    // turn slider's numerical value into a date
+    chosenDate = generateDate(selection);
+    
+    // show those dates on the page
+    displayDates(chosenDate);
+    
+    selectedPresidentList = presCache.filter(function(index, president) {
+      return Date.parse(president.took_office) <= chosenDate && (Date.parse(president.death) > chosenDate || Date.parse(president.death) == null); 
+    });
+
+    removedPresidentList = presCache.filter(function(index, president) {
+      return (Date.parse(president.death) < chosenDate && Date.parse(president.death) !== null) || Date.parse(president.took_office) > chosenDate; 
+    });
+
+    $.each(removedPresidentList, function (index, president) {
+      $('#presidents').find('#' + president.birth).animate({
+        opacity: 0
+      }, 400, 'linear').animate({
+        width: 0
+      }, 400, 'swing');
     });
 
     $.each(selectedPresidentList, function (index, president) {
       $('#presidents').find('#' + president.birth).animate({
         width: 120
-      }, 200).fadeTo(400, 1);
+      }, 400, 'swing'). animate({
+        opacity: 1
+      }, 400, 'linear');
     });
   };
 
@@ -89,9 +127,9 @@
       min: -82000,
       value: 0,
       animate: "slow",
-      slide: showPresidents,
-      change: showPresidents,
-      create: showPresidents
+      slide: showPresidentsFast,
+      change: showPresidentsSlow,
+      create: showPresidentsFast
     });
     $( "#selector" ).slider( "value", 0 );
   });
