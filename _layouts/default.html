@@ -42,7 +42,7 @@
     orderedPresidentList = $(presidentObjects).sort(sortByInauguration);
     presCache = orderedPresidentList;
     $.each(orderedPresidentList, function (index, president) {
-      $('#presidents').append('<div class="pres" id="' + president.birth + '"><img src="' + president.imageURL + '" alt="' + president.name + '" />' + '<p>' + president.name + '</p></div>');
+      $('#presidents').append('<div class="pres" id="' + president.birth + '"><a href="' + president.url + '" target="_blank"><img src="' + president.imageURL + '" alt="' + president.name + '" /></a>' + '<p>' + president.name + '</p></div>');
       
     });
     // $('.pres').hide();
@@ -78,7 +78,7 @@
 
     $.each(selectedPresidentList, function (index, president) {
       $('#presidents').find('#' + president.birth).css({
-        width: 120,
+        width: 160,
         opacity: 1
       });
     });
@@ -113,7 +113,7 @@
 
     $.each(selectedPresidentList, function (index, president) {
       $('#presidents').find('#' + president.birth).animate({
-        width: 120
+        width: 160
       }, 400, 'swing'). animate({
         opacity: 1
       }, 400, 'linear');
