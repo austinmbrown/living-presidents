@@ -31,11 +31,18 @@ img {
 
 .pres {
   float: left;
-  position: relative;
 }
 
 #controls {
   width: 900px;
   margin: 5px auto;
+}
+
+.selection {
+  display: inline-block;
+  width: 180px;
+}
+
+button {
   display: inline-block;
 }

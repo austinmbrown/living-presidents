@@ -25,8 +25,13 @@
   </div>
 
   <div id="controls">
+    
     <div id="selector"></div>
+
+    <button type="button" onclick="earlier()">Earlier</button>
     <p class="selection">0</p>
+    <button type="button" onclick="later()">Later</button>
+
   </div>
 
 </body>
@@ -35,6 +40,7 @@
 <script type="text/javascript">
   
   var presCache;
+  var transitionDates = [];
   var today = Date.today();
 
   // put presidents on the page, hidden
@@ -42,15 +48,34 @@
     orderedPresidentList = $(presidentObjects).sort(sortByInauguration);
     presCache = orderedPresidentList;
     $.each(orderedPresidentList, function (index, president) {
+      transitionDates.push(president.took_office, president.death);
       $('#presidents').append('<div class="pres" id="' + president.birth + '"><a href="' + president.url + '" target="_blank"><img src="' + president.imageURL + '" alt="' + president.name + '" /></a>' + '<p>' + president.name + '</p></div>');
       
     });
-    // $('.pres').hide();
-    showPresidentsFast();
+    showPresidents();
+
+    // sort & unique list of transition dates
+    transitionDates.sort().splice(transitionDates.indexOf(null));
+    transitionDates = $.grep(transitionDates, function(v, k){
+      return $.inArray(v ,transitionDates) === k;
+    });
+
   });
 
+
+
+  function earlier() {
+    var selection = $( '#selector' ).slider( 'value' );
+    $( "#selector" ).slider( "value", (selection - 365) );  
+  };
+
+  function later() {
+    var selection = $( '#selector' ).slider( 'value' );
+    $( "#selector" ).slider( "value", (selection + 365) );
+  }
+
   // most of the magic happens here
-  function showPresidentsFast() {
+  function showPresidents() {
 
     // get the numerical value from the slider
     var selection = $( '#selector' ).slider( 'value' );
@@ -71,8 +96,8 @@
 
     $.each(removedPresidentList, function (index, president) {
       $('#presidents').find('#' + president.birth).css({
-        opacity: 0,
-        width: 0
+        width: 0,
+        opacity: 0
       });
     });
 
@@ -106,19 +131,20 @@
     $.each(removedPresidentList, function (index, president) {
       $('#presidents').find('#' + president.birth).animate({
         opacity: 0
-      }, 400, 'linear').animate({
+      }, 400).animate({
         width: 0
-      }, 400, 'swing');
+      }, 400);
     });
 
     $.each(selectedPresidentList, function (index, president) {
       $('#presidents').find('#' + president.birth).animate({
         width: 160
-      }, 400, 'swing'). animate({
+      }, 400).animate({
         opacity: 1
-      }, 400, 'linear');
+      }, 400);
     });
   };
+
 
   // slider
   $(function() {  
@@ -126,10 +152,9 @@
       max: 0,
       min: -82000,
       value: 0,
-      animate: "slow",
-      slide: showPresidentsFast,
+      slide: showPresidents,
       change: showPresidentsSlow,
-      create: showPresidentsFast
+      create: showPresidents
     });
     $( "#selector" ).slider( "value", 0 );
   });
