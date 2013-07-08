@@ -38,7 +38,7 @@
 </html>
 
 <script type="text/javascript">
-  
+
   var presCache;
   var transitionDates = [];
   var today = Date.today();
@@ -50,9 +50,9 @@
     $.each(orderedPresidentList, function (index, president) {
       transitionDates.push(president.took_office, president.death);
       $('#presidents').append('<div class="pres" id="' + president.birth + '"><a href="' + president.url + '" target="_blank"><img src="' + president.imageURL + '" alt="' + president.name + '" /></a>' + '<p>' + president.name + '</p></div>');
-      
     });
-    showPresidents();
+ 
+    showPresidents(Date.today(), 0);
 
     // sort & unique list of transition dates
     transitionDates.sort().splice(transitionDates.indexOf(null));
@@ -61,8 +61,6 @@
     });
 
   });
-
-
 
   function earlier() {
     var selection = $( '#selector' ).slider( 'value' );
@@ -75,49 +73,9 @@
   }
 
   // most of the magic happens here
-  function showPresidents() {
+  function showPresidents(chosenDate, animationSpeed) {
 
-    // get the numerical value from the slider
-    var selection = $( '#selector' ).slider( 'value' );
-    
-    // turn slider's numerical value into a date
-    chosenDate = generateDate(selection);
-    
-    // show those dates on the page
-    displayDates(chosenDate);
-    
-    selectedPresidentList = presCache.filter(function(index, president) {
-      return Date.parse(president.took_office) <= chosenDate && (Date.parse(president.death) > chosenDate || Date.parse(president.death) == null); 
-    });
-
-    removedPresidentList = presCache.filter(function(index, president) {
-      return (Date.parse(president.death) < chosenDate && Date.parse(president.death) !== null) || Date.parse(president.took_office) > chosenDate; 
-    });
-
-    $.each(removedPresidentList, function (index, president) {
-      $('#presidents').find('#' + president.birth).css({
-        width: 0,
-        opacity: 0
-      });
-    });
-
-    $.each(selectedPresidentList, function (index, president) {
-      $('#presidents').find('#' + president.birth).css({
-        width: 160,
-        opacity: 1
-      });
-    });
-  };
-
-  function showPresidentsSlow() {
-
-    // get the numerical value from the slider
-    var selection = $( '#selector' ).slider( 'value' );
-    
-    // turn slider's numerical value into a date
-    chosenDate = generateDate(selection);
-    
-    // show those dates on the page
+    // show dates on the page
     displayDates(chosenDate);
     
     selectedPresidentList = presCache.filter(function(index, president) {
@@ -131,17 +89,17 @@
     $.each(removedPresidentList, function (index, president) {
       $('#presidents').find('#' + president.birth).animate({
         opacity: 0
-      }, 400).animate({
+      }, animationSpeed).animate({
         width: 0
-      }, 400);
+      }, animationSpeed);
     });
 
     $.each(selectedPresidentList, function (index, president) {
       $('#presidents').find('#' + president.birth).animate({
         width: 160
-      }, 400).animate({
+      }, animationSpeed).animate({
         opacity: 1
-      }, 400);
+      }, animationSpeed);
     });
   };
 
@@ -152,12 +110,18 @@
       max: 0,
       min: -82000,
       value: 0,
-      animate: 400,
-      slide: showPresidents,
-      change: showPresidentsSlow,
-      create: showPresidents
+      animate: true,
+      create: function( event, ui ) {
+        showPresidents(Date.today(), 0);
+      },
+      slide: function( event, ui ) {
+        showPresidents(generateDate(ui.value), 10);
+      },
+      change: function( event, ui ) {
+        showPresidents(generateDate(ui.value), 400);
+      }
     });
-  });
+  }); 
 
   // some helper stuff
 
