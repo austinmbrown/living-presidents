@@ -46,3 +46,15 @@ img {
 button {
   display: inline-block;
 }
+
+.dead {
+  opacity: 0;
+  width: 0px;
+  -webkit-transition: opacity 0.4s, width 0.4s 0.4s;
+}
+
+.alive {
+  opacity: 1;
+  width: 160px;
+  -webkit-transition: width 0.4s, opacity 0.4s 0.4s;
+}

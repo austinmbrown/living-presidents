@@ -87,19 +87,11 @@
     });
 
     $.each(removedPresidentList, function (index, president) {
-      $('#presidents').find('#' + president.birth).animate({
-        opacity: 0
-      }, animationSpeed).animate({
-        width: 0
-      }, animationSpeed);
+      $('#presidents').find('#' + president.birth).removeClass( "alive" ).addClass( "dead" )
     });
 
     $.each(selectedPresidentList, function (index, president) {
-      $('#presidents').find('#' + president.birth).animate({
-        width: 160
-      }, animationSpeed).animate({
-        opacity: 1
-      }, animationSpeed);
+      $('#presidents').find('#' + president.birth).removeClass( "dead" ).addClass( "alive" )
     });
   };
 
