@@ -51,6 +51,9 @@ button {
   opacity: 0;
   width: 0px;
   -webkit-transition: opacity 0.8s, width 0.8s 0.8s;
+  -moz-transition: opacity 0.8s, width 0.8s 0.8s;
+  -o-transition: opacity 0.8s, width 0.8s 0.8s;
+  transition: opacity 0.8s, width 0.8s 0.8s;
 }
 
 .dead img {
@@ -58,12 +61,18 @@ button {
   height: 0px;
   margin-top: 84px;
   -webkit-transition: width 0.8s, height 0.8s, margin-top 0.8s;
+  -moz-transition: width 0.8s, height 0.8s, margin-top 0.8s;
+  -o-transition: width 0.8s, height 0.8s, margin-top 0.8s;
+  transition: width 0.8s, height 0.8s, margin-top 0.8s;
 }
 
 .alive {
   opacity: 1;
   width: 160px;
   -webkit-transition: width 0.8s, opacity 0.8s 0.8s;
+  -moz-transition: width 0.8s, opacity 0.8s 0.8s;
+  -o-transition: width 0.8s, opacity 0.8s 0.8s;
+  transition: width 0.8s, opacity 0.8s 0.8s;
 }
 
 .alive img {
@@ -71,4 +80,7 @@ button {
   height: 150px;
   margin-top: 10px;
   -webkit-transition: width 0.8s 0.8s, height 0.8s 0.8s, margin-top 0.8s 0.8s;
+  -moz-transition: width 0.8s 0.8s, height 0.8s 0.8s, margin-top 0.8s 0.8s;
+  -o-transition: width 0.8s 0.8s, height 0.8s 0.8s, margin-top 0.8s 0.8s;
+  transition: width 0.8s 0.8s, height 0.8s 0.8s, margin-top 0.8s 0.8s;
 }
