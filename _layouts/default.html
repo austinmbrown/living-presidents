@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
   <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
   <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-  <script src="date.js"></script>
+  <script src="moment.min.js"></script>
 
 </head>
 
@@ -41,7 +41,7 @@
 
   var presCache;
   var transitionDates = [];
-  var today = Date.today();
+  var today = moment();
 
   // put presidents on the page, hidden
   $.getJSON("prezfb.json", function(presidentObjects){
@@ -52,7 +52,7 @@
       $('#presidents').append('<div class="pres" id="' + president.birth + '"><a href="' + president.url + '" target="_blank"><img src="' + president.imageURL + '" alt="' + president.name + '" /></a>' + '<p>' + president.name + '</p></div>');
     });
  
-    showPresidents(Date.today(), 0);
+    showPresidents(moment());
 
     // sort & unique list of transition dates
     transitionDates.sort().splice(transitionDates.indexOf(null));
@@ -62,28 +62,39 @@
 
   });
 
+
   function earlier() {
     var selection = $( '#selector' ).slider( 'value' );
-    $( "#selector" ).slider( "value", (selection - 365) );  
+    for ( var i = transitionDates.length - 1; i >= 0; i-- ) {
+      if ( moment(transitionDates[i], "YYYY-MM-DD" ).isBefore( generateDate(selection) ) ) {
+        $( "#selector" ).slider( "value", ( generateNumber( moment(transitionDates[i], "YYYY-MM-DD" ) ) ) -1 );
+        break;
+      };
+    };  
   };
 
   function later() {
     var selection = $( '#selector' ).slider( 'value' );
-    $( "#selector" ).slider( "value", (selection + 365) );
+    for ( var i = 0 ; i <= transitionDates.length - 1; i++ ) {
+      if ( moment(transitionDates[i], "YYYY-MM-DD" ).isAfter( generateDate(selection) ) ) {
+        $( "#selector" ).slider( "value", ( generateNumber( moment(transitionDates[i], "YYYY-MM-DD" ) ) ) );
+        break;
+      };
+    }; 
   }
 
   // most of the magic happens here
-  function showPresidents(chosenDate, animationSpeed) {
+  function showPresidents(chosenDate) {
 
     // show dates on the page
     displayDates(chosenDate);
     
     selectedPresidentList = presCache.filter(function(index, president) {
-      return Date.parse(president.took_office) <= chosenDate && (Date.parse(president.death) > chosenDate || Date.parse(president.death) == null); 
+      return moment(president.took_office) <= chosenDate && (moment(president.death) > chosenDate || moment(president.death) == null); 
     });
 
     removedPresidentList = presCache.filter(function(index, president) {
-      return (Date.parse(president.death) < chosenDate && Date.parse(president.death) !== null) || Date.parse(president.took_office) > chosenDate; 
+      return (moment(president.death) < chosenDate && moment(president.death) !== null) || moment(president.took_office) > chosenDate; 
     });
 
     $.each(removedPresidentList, function (index, president) {
@@ -104,13 +115,13 @@
       value: 0,
       animate: 1000,
       create: function( event, ui ) {
-        showPresidents(Date.today(), 0);
+        showPresidents(moment());
       },
       slide: function( event, ui ) {
-        showPresidents(generateDate(ui.value), 10);
+        showPresidents(generateDate(ui.value));
       },
       change: function( event, ui ) {
-        showPresidents(generateDate(ui.value), 400);
+        showPresidents(generateDate(ui.value));
       }
     });
   }); 
@@ -119,16 +130,22 @@
 
   // takes a number from the slider, counts back that many days, returns date
   function generateDate(number) {
-    var d = Date.today().addDays(number);
-    if (d.compareTo(Date.today().set({ year: 1789, month: 3, day: 30})) === -1) {
-      d = Date.today().set({ year: 1789, month: 3, day: 30});
+    var d = moment().add('days', number);
+    if (d.isBefore(moment('1789-03-30'))) {
+      d = moment('1789-03-30');
     };
     return d;
   };
 
+  // takes a date and generates a number for the slider
+  function generateNumber(dateThing) {
+    var now = moment();
+    return dateThing.diff(now, 'days');
+  };
+
   // changes html to show the date based on slider position
   function displayDates(date) {
-    var todayString = date.toString('MMMM d, yyyy');
+    var todayString = moment(date).format('MMMM Do, YYYY');
     $('.title').html('<h1>Living Presidents: ' + todayString + '</h1>');
     $(".selection").html(todayString);
   };
