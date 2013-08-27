@@ -9,6 +9,7 @@
   <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
   <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
   <script src="moment.min.js"></script>
+  <link href='http://fonts.googleapis.com/css?family=Quattrocento:400,700' rel='stylesheet' type='text/css'>
 
 </head>
 
@@ -26,11 +27,17 @@
 
   <div id="controls">
     
-    <div id="selector"></div>
+    <div>
+      <p class="daterow">1789</p>
+      <div id="selector"></div>
+      <p class="daterow">2013</p>
+    </div>
 
-    <button type="button" onclick="earlier()">Earlier</button>
-    <p class="selection">0</p>
-    <button type="button" onclick="later()">Later</button>
+    <div>
+      <button type="button" onclick="earlier()">Earlier</button>
+      <p class="selection">0</p>
+      <button type="button" onclick="later()">Later</button>
+    </div>
 
   </div>
 

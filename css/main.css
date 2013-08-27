@@ -1,7 +1,7 @@
 body {
   background-color: #e1ddd9;
-  font-size: 12px;
-  font-family: Verdana, Arial, Helvetica, SunSans-Regular, Sans-Serif;
+  font-size: 18px;
+  font-family: 'Quattrocento', serif;
   color:#564b47;  
   margin: 40px 40px;
   text-align: center;
@@ -13,7 +13,6 @@ h1 {
 
 img {
   border: 4px solid #564b47;
-  margin: 10px 20px 5px 20px;
   box-shadow: 4px 4px 4px #444;
 }
 
@@ -22,7 +21,7 @@ img {
 }
 
 #presidents {
-  height: 320px;
+  height: 300px;
   display: inline-block;
   overflow: hidden;
   padding-top: 80px;
@@ -30,16 +29,29 @@ img {
 
 .pres {
   float: left;
+  padding: 0px;
 }
 
 #controls {
-  width: 900px;
+  width: 1000px;
   margin: 5px auto;
+}
+
+#selector {
+  width: 800px;
+  display: inline-block;
+}
+
+.daterow {
+  display: inline-block;
+  margin: 10px 20px;
+  font-weight: bold;
+  font-size: 24px;
 }
 
 .selection {
   display: inline-block;
-  width: 180px;
+  width: 260px;
 }
 
 button {
@@ -67,7 +79,7 @@ button {
 
 .alive {
   opacity: 1;
-  width: 180px;
+  width: 178px;
   -webkit-transition: width 0.8s, opacity 0.8s 0.8s;
   -moz-transition: width 0.8s, opacity 0.8s 0.8s;
   -o-transition: width 0.8s, opacity 0.8s 0.8s;
