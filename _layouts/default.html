@@ -17,6 +17,34 @@
 
   <div class="title"></div>
 
+  <div id="explanation">
+    <a href="#" class="show_hide"><h3>Why does this website exist?</h3></a>
+
+    <div class="slidingDiv">
+      <p>That's a perfectly reasonable question and one I think more websites ought to answer. In this case, it was a way for me to teach myself some jQuery and to scratch an historical itch. It all started when the second President Bush was dedicating his newly-built Presidential libray - at the ceremony, he appeared along with President Obama and the three living former Presidents, Clinton, Bush Sr, and Carter.</p>
+    
+      <p><a href="http://www.houstonchronicle.com/news/houston-texas/houston/article/Presidents-past-and-present-join-Bush-43-for-4465172.php"><img src="/living-presidents/images/bushlibrary.jpg" alt="" title="" style="width:100%"/></a></p>
+  
+      <p>Like everyone else, I found the elder Bush's brightly-colored socks positively delightful. Also, I couldn't help but wonder about the conversations those five Presidents were having that day. And I wanted to know - of history's Presidential posses, was this the biggest?</p>
+  
+      <p>Lucky for me, Wikipedia's diligent community had done all the hard work and crafted a <a href="http://en.wikipedia.org/wiki/Living_Presidents_of_the_United_States">handy table chronicling all the cohorts of living Presidents</a> in American history. Using that table, I was able to quickly learn that our current five Presidents is not the most we've ever seen; six is. And, to my surprise, that maximum is not an exclusively modern occurance. There have been three instances when six presidents lived at once: in the early aughts, the early nineties, and for several months in 1861 and 1862. </p>
+  
+      <p>I have to specify, of course, that my definition of a President requires that they've been inaugurated. So, for example, Barack Obama was born in 1961, but he doesn't count among living Presidents until his inauguration in 2009. Counting them from birth is also an interesting exercise, but I was drawn in by the question of these guys having served in one of the hardest, most exclusive and alienting jobs on the planet and how that brings them together. </p>
+  
+      <p>That wikipedia page also had some great images of Presidents hanging out and I really felt like I got a unique sense of historical continuity from seeing them that way. I had more than one classroom, growing up, that had a poster with all the Presidents' portraits on it, but there's something about seeing them grouped as contemporaries and watching that group shift over time that makes it more relatable. </p>
+  
+      <div>
+        <a href="http://en.wikipedia.org/wiki/File:FordNixonBushReaganCarter.jpg"><img src="/living-presidents/images/Five_Presidents_Oval_Office.jpg" alt="" title="" style="width:42%; margin: 20px"/></a>
+        <a href="http://commons.wikimedia.org/wiki/File:Five_Presidents_Oval_Office.jpg"><img src="/living-presidents/images/FordNixonBushReaganCarter.jpg" alt="" title="" style="width:42%; margin: 20px"/></a>
+      </div>
+  
+      <p>So, it was on that train of thought that I conceived this site - a way to watch the cohort of living Presidents shuffle through history. Some Presidents stuck around for a long, long time, while others came and went shockingly fast; some had lots of company, while others held the responsibility of office entirely alone for a time. Each historical moment as represented by a group is singular to a moment, and yet clearly connected to the past and the future.</p> 
+
+      <a href="#" class="show_hide"><p>Anyway, get all my blabberin' out of your way and give it a try.</p></a>
+    </div>
+
+  </div>
+
   <div id="presidents">
     
   </div>
@@ -45,6 +73,19 @@
 </html>
 
 <script type="text/javascript">
+
+  $(document).ready(function(){
+ 
+        $(".slidingDiv").hide();
+        $(".show_hide").show();
+ 
+    $('.show_hide').click(function(){
+    $(".slidingDiv").slideToggle();
+    });
+ 
+  });
+
+
 
   var presCache;
   var transitionDates = [];
@@ -161,6 +202,5 @@
   function sortByInauguration(a,b) {
     return a.took_office > b.took_office ? 1 : -1;
   };
-
 
 </script>

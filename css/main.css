@@ -7,6 +7,11 @@ body {
   text-align: center;
 }
 
+a:link {text-decoration: none;}
+a:visited {text-decoration: none; color: inherit;}
+a:hover {text-decoration: underline;}
+a:active {text-decoration: underline;}
+
 h1 {
   font-size: 3em;
 }
@@ -16,15 +21,26 @@ img {
   box-shadow: 4px 4px 4px #444;
 }
 
-.title {
-  text-align: center;
+#explanation {
+  width: 800px;
+  margin: auto;
+  text-align: left;
 }
+
+.slidingDiv {
+  height:1600px;
+}
+ 
+.show_hide {
+    display:none;
+}
+
 
 #presidents {
   height: 300px;
   display: inline-block;
   overflow: hidden;
-  padding-top: 80px;
+  padding-top: 30px;
 }
 
 .pres {
