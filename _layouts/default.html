@@ -68,7 +68,7 @@
         break;
       };
     }; 
-  }
+  };
 
   function play() {
     var counter = -82000;
@@ -76,14 +76,17 @@
       function(){
         $( "#selector" ).slider( "value", (counter) );
         counter = counter + 10;
+        if (counter == 0) {
+          stop();
+        };
       },
-      10
+      1
     );
-  }
+  };
 
   function stop() {
     window.clearInterval(window.playPresidents);
-  }
+  };
 
   // most of the magic happens here
   function showPresidents(chosenDate) {
