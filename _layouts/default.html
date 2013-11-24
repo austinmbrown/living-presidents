@@ -70,6 +70,21 @@
     }; 
   }
 
+  function play() {
+    var counter = -82000;
+    window.playPresidents = window.setInterval(
+      function(){
+        $( "#selector" ).slider( "value", (counter) );
+        counter = counter + 10;
+      },
+      10
+    );
+  }
+
+  function stop() {
+    window.clearInterval(window.playPresidents);
+  }
+
   // most of the magic happens here
   function showPresidents(chosenDate) {
 
@@ -184,7 +199,11 @@
   </div>
 
   <div id="instructions">
-    <p>Move the slider to see which (post-inauguration) US Presidents were alive on a given day.</p>
+    <p><strong>Move the slider to see which (post-inauguration) US Presidents were alive on a given day.</strong></p>
+    <p>Or, click Play to watch it from beginning to end:
+    <button type="button" onclick="play()">Play</button>
+    <button type="button" onclick="stop()">Stop</button>
+  </p>
   </div>
 
   <div id="controls">

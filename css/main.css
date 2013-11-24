@@ -13,6 +13,12 @@ a:hover, a:active {text-decoration: underline;}
 
 h1 {
   font-size: 3em;
+  text-align: left;
+}
+
+.title {
+  width: 1020px;
+  margin: auto;
 }
 
 img {
