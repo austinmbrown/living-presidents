@@ -345,7 +345,7 @@
     "death": null,
     "name": "Barack Obama",
     "took_office": "2009-01-20",
-    "left_office": null,
+    "left_office": "2017-01-20",
     "birth": "1961-08-04",
     "imageURL": "/living-presidents/images/Barack-Obama-12782369-1-402_144x144.jpg",
     "url": "http://en.wikipedia.org/wiki/Barack_Obama"
@@ -385,5 +385,14 @@
     "birth": "1917-05-29",
     "imageURL": "/living-presidents/images/John-F-Kennedy-9362930-1-402_144x144.jpg",
     "url": "http://en.wikipedia.org/wiki/John_F._Kennedy"
+  },
+  {
+    "death": null,
+    "name": "Donald Trump",
+    "took_office": "2017-01-20",
+    "left_office": null,
+    "birth": "1946-06-14",
+    "imageURL": "/living-presidents/images/donald_trump.jpg",
+    "url": "https://en.wikipedia.org/wiki/Donald_Trump"
   }
 ]
