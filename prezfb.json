@@ -390,9 +390,18 @@
     "death": null,
     "name": "Donald Trump",
     "took_office": "2017-01-20",
-    "left_office": null,
+    "left_office": "2021-01-20",
     "birth": "1946-06-14",
     "imageURL": "/living-presidents/images/donald_trump.jpg",
     "url": "https://en.wikipedia.org/wiki/Donald_Trump"
+  },
+  {
+    "death": null,
+    "name": "Joseph R. Biden, Jr.",
+    "took_office": "2021-01-20",
+    "left_office": null,
+    "birth": "1942-11-20",
+    "imageURL": "/living-presidents/images/Joe_Biden_official_portrait_2013_cropped.jpg",
+    "url": "https://en.wikipedia.org/wiki/Joe_Biden"
   }
 ]
